@@ -1,0 +1,58 @@
+//Simple circuit making a Leaf move a servo
+
+//The servo is connected to pin 3
+//The leaf is connected to pin 9
+
+// Croc clip or wire to leaf or other
+// input, must be conductive to work - e.g. dry plants not good
+
+//include the circuit playgroud and servo libraries
+#include <Adafruit_CircuitPlayground.h>
+#include <Servo.h> 
+
+// set up your variables
+Servo servo; //make a servo object
+
+//create an integer (number) for the 
+//capacitive touch sensor reading
+int capsense;
+//and for the servo position
+int pos = 0; 
+
+//void setup runs at the start of your program once
+//this is setting up what you need for the program
+void setup() {
+  CircuitPlayground.begin(); //start the board
+  servo.attach(3); //set up the servo on pin 3
+}
+
+//void loop runs continously after void setup
+//read from sensors and control components here
+void loop() {
+  capsense = CircuitPlayground.readCap(9); //read the capacative sensor from pin 9
+ 
+  //set a random angle between 10 and 180
+  pos = random (10, 180);
+
+  //An IF Statement
+  //IF the capactive sensor is more than 100
+  //(you have touched the leaf)
+ if  (capsense > 100) {
+
+ //THEN move the servo to the random angle (pos)
+   servo.write(pos);
+
+  } //close the if statement
+
+  //wait 10 miliseconds
+  delay(10);
+
+ //move the servo back to zero
+ servo.write(0);
+
+ //wait another 10 miliseconds
+ delay(10);
+}
+
+
+
