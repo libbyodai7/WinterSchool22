@@ -1,0 +1,81 @@
+//Circuit 2 - making light and sound in your circuit 
+
+//The servo is connected to pin 3
+//The leaf is connected to pin 9
+
+// Coc clip or wire to leaf or other
+// input, must be conductive to work - e.g. dry plants not good
+
+
+#include <Adafruit_CircuitPlayground.h>
+#include <Servo.h> 
+
+// set up your variables
+Servo servo;
+
+//create a variable for the sound
+int SoundFrequency = 0;
+
+int capsense;
+int pos = 0; 
+
+
+void setup() {
+  CircuitPlayground.begin();
+  servo.attach(3); //set up the servo on pin 3
+}
+
+void loop() {
+  capsense = CircuitPlayground.readCap(9); //read the capacative sensor from pin 9
+  pos = random (10, 180); // set random position
+
+  //if leaf is touched
+ if  (capsense > 100) {
+
+  //set the sound to 523
+  //EXTRA: how do we make this a random number?
+
+    SoundFrequency = 203;
+    
+    //call the neoColor function
+    neoColor();
+
+   //move the servo and wait 50ms
+   servo.write(pos);
+   delay(50);
+
+   // play the sound at the frequency and for 200 ms
+  CircuitPlayground.playTone(SoundFrequency, 200);
+  
+
+  }  
+  //move the servo back to zero
+  delay(10);
+   servo.write(0);
+
+   //turn the lights off
+   CircuitPlayground.clearPixels();
+    
+}
+
+
+//neoColor function
+//it is put here to make the code neater
+void neoColor(){
+  //turn off all the pixels
+    CircuitPlayground.clearPixels();
+
+    //there are 10 leds on the neopixel board numbered between 0 and 10
+    //find 3 random leds
+    int ledNum1 = random (0, 10);
+    int ledNum2 = random (0, 10);
+    int ledNum3 = random (0, 10);
+
+    //set the RGB colours of the led
+    //(led, red, green, blue)
+    CircuitPlayground.setPixelColor(ledNum1,0,255,255); // cyan
+    CircuitPlayground.setPixelColor(ledNum2,255,255,0); // yellow
+    CircuitPlayground.setPixelColor(ledNum3,255,0,255); //magenta
+
+  }
+
