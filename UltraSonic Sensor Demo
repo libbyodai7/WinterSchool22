@@ -1,0 +1,41 @@
+//this sketch lights up a neopixel on the playground when an object is closer than 20cm to the sensor
+
+
+#include <Adafruit_CircuitPlayground.h>
+#include <HCSR04.h>
+
+
+// Initialize sensor that uses digital pins 13 and 12. (for uno)
+//the echo pin is first and then the trigger pin
+
+UltraSonicDistanceSensor distanceSensor(13, 12);  
+
+void setup () {
+    CircuitPlayground.begin(); //start the board
+    Serial.begin(9600);  // We initialize serial connection so that we could print values from sensor.
+}
+
+void loop () {
+  // Every 500 miliseconds, do a measurement using the sensor and print the distance in centimeters.
+  
+   float distance = distanceSensor.measureDistanceCm();
+    
+    
+    Serial.println(distance);
+    
+    delay(500);
+
+CircuitPlayground.clearPixels();
+
+//turn a light on if something is closer than 20cm
+
+if (distance < 20){
+
+  int led = random (0, 10);
+  CircuitPlayground.setPixelColor(led,random(0, 255),random(0,255),random(0,255)); 
+
+}
+}
+
+
+    
