@@ -6,9 +6,10 @@
 
 
 // Initialize sensor that uses digital pins 13 and 12. (for uno)
-//the echo pin is first and then the trigger pin
+//and uses pins 6 and 12 for Playgrounds
+//the trigger pin is first and then the echo pin
 
-UltraSonicDistanceSensor distanceSensor(13, 12);  
+UltraSonicDistanceSensor distanceSensor(6, 12);  
 
 void setup () {
     CircuitPlayground.begin(); //start the board
